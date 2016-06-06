@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 PROJECT(StochBB)
 
-option(ENABLE_PYTHON "Build python binding" ON)
 option(PYTHON_INSTALL_LOCAL "Install python binding to user local" ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
@@ -15,36 +14,19 @@ set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_INIT})
 set(CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_INIT})
 set(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_INIT})
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Xml REQUIRED)
-find_package(Qt5PrintSupport REQUIRED)
-
 find_package(Eigen3 REQUIRED)
 
-if(${ENABLE_PYTHON})
- FIND_PACKAGE(SWIG REQUIRED)
- FIND_PACKAGE(PythonInterp REQUIRED)
- FIND_PACKAGE(PythonLibs REQUIRED)
- INCLUDE(${SWIG_USE_FILE})
- # If siwg and python found -> build python interface
- SET(BUILD_PYTHON_INTERFACE ${SWIG_FOUND} AND ${PYTHONINTERP_FOUND} AND ${PYTHONLIBS_FOUND})
- INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
-endif(${ENABLE_PYTHON})
+FIND_PACKAGE(SWIG REQUIRED)
+FIND_PACKAGE(PythonInterp REQUIRED)
+FIND_PACKAGE(PythonLibs REQUIRED)
+INCLUDE(${SWIG_USE_FILE})
+# If siwg and python found -> build python interface
+SET(BUILD_PYTHON_INTERFACE ${SWIG_FOUND} AND ${PYTHONINTERP_FOUND} AND ${PYTHONLIBS_FOUND})
+INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
-if(${ENABLE_R})
- SET(BUILD_R_INTERFACE ON)
-endif(${ENABLE_R})
 
-ADD_DEFINITIONS(${Qt5Widgets_DEFINITIONS})
-INCLUDE_DIRECTORIES(${Qt5Core_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${Qt5Declarative_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${Qt5Widgets_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${Qt5Xml_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${Qt5PrintSupport_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-SET(LIBS ${Qt5Core_LIBRARIES} ${Qt5Xml_LIBRARIES} ${Qt5PrintSupport_LIBRARIES})
 
 #
 # Get default install directories under Linux
@@ -71,12 +53,4 @@ SET(libsbb_VERSION_MINOR "1")
 SET(libsbb_VERSION_PATCH "0")
 
 
-#add_subdirectory(src)
-add_subdirectory(lib)
-add_subdirectory(examples)
-if(${BUILD_PYTHON_INTERFACE})
- add_subdirectory(python)
-endif(${BUILD_PYTHON_INTERFACE})
-add_subdirectory(R)
-add_subdirectory(test)
-add_subdirectory(src)
+add_subdirectory(python)
