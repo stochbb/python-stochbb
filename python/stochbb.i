@@ -3,7 +3,7 @@
 %{
 #define SWIG_FILE_WITH_INIT
 //#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
-#include "lib/stochbb.hh"
+#include <stochbb/stochbb.hh>
 %}
 
 %include "numpy.i"
@@ -487,4 +487,16 @@ public:
   static void addHandler(const LogHandler &handler);
 };
 
+}
+
+%inline {
+  double logLikelihood(const stochbb::Var &X, double tmin, double tmax, size_t N, const double *data, int M) {
+    Eigen::Map<const Eigen::VectorXd> dataMap(data, M);
+    return stochbb::logLikelihood(X, tmin, tmax, N, dataMap);
+  }
+
+  double kolmogorov(const stochbb::Var &X, double tmin, double tmax, size_t N, const double *data, int M) {
+    Eigen::Map<const Eigen::VectorXd> dataMap(data, M);
+    return stochbb::kolmogorov(X, tmin, tmax, N, dataMap);
+  }
 }
