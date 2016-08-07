@@ -16,5 +16,7 @@ setup(
     ],
   ext_modules = [Extension("_stochbb",["python/stochbb.i"], swig_opts=["-c++"], 
                            include_dirs=["/usr/include/eigen3"],
+                           libraries=["stochbb"],
                            extra_compile_args=["-std=c++11"])],
-  py_modules = ["python/stochbb"])
+  package_dir = {'': 'python/'},
+  packages = [''])
