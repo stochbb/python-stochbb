@@ -209,10 +209,10 @@ protected:
 };
 
 
-class CondChain: public DerivedVar
+class CondSum: public DerivedVar
 {
 protected:
-  CondChain();
+  CondSum();
 };
 
 
@@ -340,7 +340,7 @@ Var mixture(const std::vector<double> weights, const std::vector<Var> &variables
 %feature("autodoc", "1");
 Var conditional(const Var &X1, const Var &X2, const Var &Y1, const Var &Y2) throw( Error );
 %feature("autodoc", "1");
-Var condchain(const Var &X1, const Var &X2, const Var &Y1, const Var &Y2) throw( Error );
+Var condsum(const Var &X1, const Var &X2, const Var &Y1, const Var &Y2) throw( Error );
 
 Density directConvolve(const std::vector<Density> &densities);
 Density directConvolve(const Density &a, const Density &b);
