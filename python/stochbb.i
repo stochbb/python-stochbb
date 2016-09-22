@@ -342,9 +342,15 @@ Var conditional(const Var &X1, const Var &X2, const Var &Y1, const Var &Y2) thro
 %feature("autodoc", "1");
 Var condsum(const Var &X1, const Var &X2, const Var &Y1, const Var &Y2) throw( Error );
 
+%feature("autodoc", "1");
 Density directConvolve(const std::vector<Density> &densities);
+%feature("autodoc", "1");
 Density directConvolve(const Density &a, const Density &b);
+%feature("autodoc", "1");
 Density directConvolve(const Density &a, const Density &b, const Density &c);
+
+%feature("autodoc", "1");
+double moment(const Var &X, size_t n, double xMin, double xMax, size_t N);
 
 %feature("autodoc", "1");
 double dnorm(double x);
@@ -490,12 +496,12 @@ public:
 }
 
 %inline {
-  double logLikelihood(const stochbb::Var &X, double tmin, double tmax, size_t N, const double *data, int M) {
+  double logLikelihood(const stochbb::Var &X, double tmin, double tmax, size_t N, const double *data, int M) throw (Error) {
     Eigen::Map<const Eigen::VectorXd> dataMap(data, M);
     return stochbb::logLikelihood(X, tmin, tmax, N, dataMap);
   }
 
-  double kolmogorov(const stochbb::Var &X, double tmin, double tmax, size_t N, const double *data, int M) {
+  double kolmogorov(const stochbb::Var &X, double tmin, double tmax, size_t N, const double *data, int M) throw (Error) {
     Eigen::Map<const Eigen::VectorXd> dataMap(data, M);
     return stochbb::kolmogorov(X, tmin, tmax, N, dataMap);
   }
